@@ -1,0 +1,93 @@
+[
+  {
+    "id": "tx_101",
+    "date": "2023-10-05",
+    "description": "NETFLIX MUMBAI",
+    "amount": 649.00,
+    "currency": "INR"
+  },
+  {
+    "id": "tx_102",
+    "date": "2023-11-05",
+    "description": "NETFLIX MUMBAI",
+    "amount": 649.00,
+    "currency": "INR"
+  },
+  {
+    "id": "tx_103",
+    "date": "2023-12-05",
+    "description": "NETFLIX MUMBAI",
+    "amount": 649.00,
+    "currency": "INR"
+  },
+  {
+    "id": "tx_201",
+    "date": "2023-10-15",
+    "description": "Spotify India",
+    "amount": 119.00,
+    "currency": "INR"
+  },
+  {
+    "id": "tx_202",
+    "date": "2023-11-15",
+    "description": "Spotify India",
+    "amount": 119.00,
+    "currency": "INR"
+  },
+  {
+    "id": "tx_301",
+    "date": "2023-10-01",
+    "description": "Jio Prepaid Recharge",
+    "amount": 666.00,
+    "currency": "INR"
+  },
+  {
+    "id": "tx_302",
+    "date": "2023-12-28",
+    "description": "Jio Prepaid Recharge",
+    "amount": 666.00,
+    "currency": "INR"
+  },
+  {
+    "id": "tx_401",
+    "date": "2023-11-10",
+    "description": "Swiggy ORDER #1234",
+    "amount": 350.00,
+    "currency": "INR"
+  },
+  {
+    "id": "tx_402",
+    "date": "2023-11-12",
+    "description": "Swiggy ORDER #5678",
+    "amount": 420.00,
+    "currency": "INR"
+  },
+  {
+    "id": "tx_403",
+    "date": "2023-11-15",
+    "description": "Zomato Food",
+    "amount": 280.00,
+    "currency": "INR"
+  },
+  {
+    "id": "tx_501",
+    "date": "2023-11-20",
+    "description": "UPI-AUTOPAY-HOTSTAR",
+    "amount": 1499.00,
+    "currency": "INR"
+  },
+  {
+    "id": "tx_601",
+    "date": "2023-10-10",
+    "description": "Bescom Electricity Bill",
+    "amount": 1250.00,
+    "currency": "INR"
+  },
+  {
+    "id": "tx_602",
+    "date": "2023-11-11",
+    "description": "Bescom Electricity Bill",
+    "amount": 1320.00,
+    "currency": "INR"
+  }
+]
