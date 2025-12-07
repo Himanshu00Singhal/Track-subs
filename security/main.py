@@ -8,6 +8,7 @@ app = FastAPI(title="Security Service")
 origins = [
     "http://localhost:5173",
     "http://localhost:3000",
+    "*", # Allow all origins for Cloudflare Tunnel
 ]
 
 app.add_middleware(

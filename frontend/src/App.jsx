@@ -1,54 +1,40 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
-import Dashboard from './components/Dashboard'
-import SubscriptionList from './components/SubscriptionList'
-import Insights from './components/Insights'
+import { useState } from 'react'
 import Login from './components/Login'
-import { Activity, CreditCard, Upload, LogOut } from 'lucide-react'
+import ModeSelection from './components/ModeSelection'
+import ManualTracker from './components/ManualTracker'
+import StatementTracker from './components/StatementTracker'
+import AADemo from './components/AADemo'
+import FinancialAdvisor from './components/FinancialAdvisor'
+import { Activity, LogOut, LayoutGrid, HelpCircle } from 'lucide-react'
 
 function App() {
     const [token, setToken] = useState(localStorage.getItem('token'))
-    const [subscriptions, setSubscriptions] = useState([])
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(null)
+    const [mode, setMode] = useState(null) // null, 'manual', 'upload', 'aa', 'advisor'
 
     const handleLogout = () => {
         localStorage.removeItem('token')
         setToken(null)
-        setSubscriptions([])
-    }
-
-    const loadDemoData = async () => {
-        setLoading(true)
-        setError(null)
-        try {
-            // 1. Get the seed data
-            const seedResponse = await axios.get('http://localhost:8000/api/seed-data')
-            const seedData = seedResponse.data
-
-            // 2. Convert to file for the analyze endpoint
-            const blob = new Blob([JSON.stringify(seedData)], { type: 'application/json' })
-            const file = new File([blob], "transactions.json")
-            const formData = new FormData()
-            formData.append('file', file)
-
-            // 3. Analyze
-            const response = await axios.post('http://localhost:8000/api/analyze', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
-            setSubscriptions(response.data)
-        } catch (err) {
-            console.error(err)
-            setError("Failed to load or analyze data. Ensure backend is running.")
-        } finally {
-            setLoading(false)
-        }
+        setMode(null)
     }
 
     if (!token) {
         return <Login onLoginSuccess={setToken} />
+    }
+
+    if (!mode) {
+        return (
+            <>
+                <div className="absolute top-4 right-4">
+                    <button
+                        onClick={handleLogout}
+                        className="text-slate-500 hover:text-red-600 transition-colors p-2 flex items-center gap-2"
+                    >
+                        <LogOut size={20} /> Logout
+                    </button>
+                </div>
+                <ModeSelection onSelectMode={setMode} />
+            </>
+        )
     }
 
     return (
@@ -57,21 +43,35 @@ function App() {
 
                 {/* Header */}
                 <div className="flex justify-between items-center">
-                    <div>
-                        <h1 className="text-3xl font-bold text-slate-900 flex items-center gap-2">
-                            <Activity className="text-indigo-600" />
-                            SubTrack India
-                        </h1>
-                        <p className="text-slate-500 mt-1">Smart Subscription Manager</p>
-                    </div>
                     <div className="flex items-center gap-4">
                         <button
-                            onClick={loadDemoData}
-                            disabled={loading}
-                            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors disabled:opacity-50"
+                            onClick={() => setMode(null)}
+                            className="text-slate-400 hover:text-indigo-600 transition-colors"
                         >
-                            {loading ? 'Processing...' : <><Upload size={18} /> Load Demo Data</>}
+                            <LayoutGrid size={24} />
                         </button>
+                        <div>
+                            <h1 className="text-3xl font-bold text-slate-900 flex items-center gap-2">
+                                <Activity className="text-indigo-600" />
+                                SubTrack India
+                            </h1>
+                            <p className="text-slate-500 mt-1">
+                                {mode === 'manual' && 'Self Tracker'}
+                                {mode === 'upload' && 'Statement Analysis'}
+                                {mode === 'aa' && 'Account Aggregator'}
+                                {mode === 'advisor' && 'Financial Advisor'}
+                            </p>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        {mode !== 'advisor' && (
+                            <button
+                                onClick={() => setMode('advisor')}
+                                className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:opacity-90 transition-opacity shadow-sm"
+                            >
+                                <HelpCircle size={18} /> Advisor
+                            </button>
+                        )}
                         <button
                             onClick={handleLogout}
                             className="text-slate-500 hover:text-red-600 transition-colors p-2"
@@ -82,34 +82,13 @@ function App() {
                     </div>
                 </div>
 
-                {error && (
-                    <div className="bg-red-50 text-red-600 p-4 rounded-lg border border-red-100">
-                        {error}
-                    </div>
-                )}
-
-                {subscriptions.length > 0 && (
-                    <>
-                        <Dashboard subscriptions={subscriptions} />
-
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                            <div className="lg:col-span-2">
-                                <SubscriptionList subscriptions={subscriptions} />
-                            </div>
-                            <div>
-                                <Insights subscriptions={subscriptions} />
-                            </div>
-                        </div>
-                    </>
-                )}
-
-                {subscriptions.length === 0 && !loading && !error && (
-                    <div className="text-center py-20 bg-white rounded-2xl border border-slate-200 shadow-sm">
-                        <CreditCard className="mx-auto h-12 w-12 text-slate-300 mb-4" />
-                        <h3 className="text-lg font-medium text-slate-900">No subscriptions found</h3>
-                        <p className="text-slate-500">Upload your bank statement or load demo data to get started.</p>
-                    </div>
-                )}
+                {/* Content Area */}
+                <div className="min-h-[600px]">
+                    {mode === 'manual' && <ManualTracker />}
+                    {mode === 'upload' && <StatementTracker />}
+                    {mode === 'aa' && <AADemo />}
+                    {mode === 'advisor' && <FinancialAdvisor />}
+                </div>
 
             </div>
         </div>

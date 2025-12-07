@@ -8,6 +8,7 @@ app = FastAPI(title="Subscription Detector API")
 origins = [
     "http://localhost:5173", # React Vite default
     "http://localhost:3000",
+    "*", # Allow all origins for Cloudflare Tunnel
 ]
 
 app.add_middleware(

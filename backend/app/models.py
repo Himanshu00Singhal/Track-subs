@@ -13,4 +13,5 @@ class Subscription(BaseModel):
     amount: float
     frequency: str
     next_due: Optional[str] = None
-    confidence: str
+    confidence: str = "Manual"
+    id: Optional[str] = None

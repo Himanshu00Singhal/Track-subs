@@ -1,4 +1,3 @@
-import React from 'react'
 import { Lightbulb, ArrowRight } from 'lucide-react'
 
 export default function Insights({ subscriptions }) {

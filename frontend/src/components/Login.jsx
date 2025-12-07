@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import axios from 'axios'
 import { Mail, Lock, ArrowRight, Loader2 } from 'lucide-react'
 
@@ -14,7 +14,7 @@ export default function Login({ onLoginSuccess }) {
         setLoading(true)
         setError(null)
         try {
-            await axios.post('http://localhost:8001/auth/send-otp', { email })
+            await axios.post('/auth/send-otp', { email })
             setStep('OTP')
         } catch (err) {
             setError('Failed to send OTP. Ensure Security Service is running on port 8001.')
@@ -28,7 +28,7 @@ export default function Login({ onLoginSuccess }) {
         setLoading(true)
         setError(null)
         try {
-            const res = await axios.post('http://localhost:8001/auth/verify-otp', { email, otp })
+            const res = await axios.post('/auth/verify-otp', { email, otp })
             const token = res.data.access_token
             localStorage.setItem('token', token)
             onLoginSuccess(token)

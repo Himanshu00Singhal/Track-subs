@@ -1,4 +1,3 @@
-import React from 'react'
 import { IndianRupee, Calendar, TrendingUp } from 'lucide-react'
 
 export default function Dashboard({ subscriptions }) {
